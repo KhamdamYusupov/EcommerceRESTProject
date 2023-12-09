@@ -1,9 +1,7 @@
-package com.ecommerce.service;
+package com.ecommerce.service.productService;
 
 
-import com.ecommerce.model.Prices;
 import com.ecommerce.model.Product;
-import com.ecommerce.model.ProductCategory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,12 +22,13 @@ public class ProductServiceImpl implements ProductService<Product> {
 
     RowMapper<Product>rowMapper = (rs, rowNum) -> {
       Product product = new Product();
-      product.setProductId(rs.getInt("product_id"));
-      product.setProductName(rs.getString("product_name"));
+      product.setId(rs.getInt("id"));
+      product.setName(rs.getString("name"));
       product.setCategoryId(rs.getInt("category_id"));
-      product.setExpirationDate(rs.getDate("expiration_date"));
-      product.setCreatedDate(rs.getDate("created_date"));
-      product.setUpdatedDate(rs.getDate("updated_date"));
+      product.setPriceId(rs.getInt("price_id"));
+      product.setExpirationDate(Instant.parse(rs.getString("expiration_date")));
+      product.setCreatedDate(Instant.parse(rs.getString("created_at")));
+      product.setUpdatedDate(Instant.parse(rs.getString("updated_at")));
       product.setCreatedBy(rs.getString("created_by"));
       product.setUpdatedBy(rs.getString("updated_by"));
       return product;
@@ -47,16 +47,16 @@ public class ProductServiceImpl implements ProductService<Product> {
 
     @Override
     public void create(Product product) {
-        String SQL_SAVE = "insert into products(product_id, product_name, category_id, expiration_date, created_date, updated_date, created_by, updated_by) values(?,?,?,?,?,?,?,?)";
-        final int insertedRow = jdbcTemplate.update(SQL_SAVE, product.getProductId(), product.getProductName(), product.getCategoryId(), product.getExpirationDate(), product.getCreatedDate(), product.getUpdatedDate(), product.getCreatedBy(), product.getUpdatedBy());
+        String SQL_SAVE = "insert into products(id, name, category_id, price_id, expiration_date, created_at, updated_at, created_by, updated_by) values(?,?,?,?,?,?,?,?,?)";
+        final int insertedRow = jdbcTemplate.update(SQL_SAVE, product.getId(), product.getName(), product.getCategoryId(), product.getPriceId(), product.getExpirationDate(), product.getCreatedDate(), product.getUpdatedDate(), product.getCreatedBy(), product.getUpdatedBy());
         if(insertedRow == 1) {
-            logger.info("New product created: " + product.getProductName());
+            logger.info("New product created: " + product.getName());
         }
     }
 
     @Override
     public Optional<Product> get(int id) {
-        String SQL_FIND_BY_ID = "select product_name, category_id, expiration_date, created_date, updated_date, created_by, updated_by from products where product_id=?";
+        String SQL_FIND_BY_ID = "select name, category_id, price_id, expiration_date, created_at, updated_at, created_by, updated_by from products where id=?";
         Product product = null;
         try{
             product = jdbcTemplate.queryForObject(SQL_FIND_BY_ID, rowMapper, id);
@@ -68,16 +68,16 @@ public class ProductServiceImpl implements ProductService<Product> {
 
     @Override
     public void update(Product product, int id) {
-        String SQL_UPDATE = "update products set product_name=?, category_id=?, expiration_date=?, created_date=?, updated_date=?, created_by=?, updated_by=? where product_id=?";
-        final int updatedRow = jdbcTemplate.update(SQL_UPDATE, product.getProductId(), product.getProductName(), product.getCategoryId(), product.getExpirationDate(), product.getCreatedDate(), product.getUpdatedDate(), product.getCreatedBy(), product.getUpdatedBy(), id);
+        String SQL_UPDATE = "update products set name=?, category_id=?, price_id=?, expiration_date=?, created_at=?, updated_at=?, created_by=?, updated_by=? where id=?";
+        final int updatedRow = jdbcTemplate.update(SQL_UPDATE, product.getName(), product.getCategoryId(), product.getPriceId(), product.getExpirationDate(), product.getCreatedDate(), product.getUpdatedDate(), product.getCreatedBy(), product.getUpdatedBy(), id);
         if(updatedRow ==1) {
-            logger.info("Product updated: " + product.getProductName());
+            logger.info("Product updated: " + product.getName());
         }
     }
 
     @Override
     public void delete(int id) {
-        String SQL_DELETE = "delete from products where product_id=?";
+        String SQL_DELETE = "delete from products where id=?";
         final int deletedRow = jdbcTemplate.update(SQL_DELETE, id);
         if(deletedRow == 1) {
             logger.info("Product has been deleted: " + id);
