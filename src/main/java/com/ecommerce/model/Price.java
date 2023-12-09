@@ -2,42 +2,62 @@ package com.ecommerce.model;
 
 import java.time.Instant;
 
-public class ProductCategory {
+public class Price {
+    private int typeId;
 
-    private int id;
-    private String name;
+    private int value;
+    private String currency;
+    private int productId;
 
     private Instant createdDate;
     private Instant updatedDate;
     private String createdBy;
     private String updatedBy;
 
-    public ProductCategory() {
+    public Price() {
     }
 
-    public ProductCategory(int id, String name, Instant createdDate, Instant updatedDate, String createdBy, String updatedBy) {
-        this.id = id;
-        this.name = name;
+    public Price(int typeId, int value, String currency, int productId, Instant createdDate, Instant updatedDate, String createdBy, String updatedBy) {
+        this.typeId = typeId;
+        this.value = value;
+        this.currency = currency;
+        this.productId = productId;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
         this.createdBy = createdBy;
         this.updatedBy = updatedBy;
     }
 
-    public int getId() {
-        return id;
+    public int getTypeId() {
+        return typeId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
     }
 
-    public String getName() {
-        return name;
+    public int getValue() {
+        return value;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
     public Instant getCreatedDate() {
@@ -74,9 +94,11 @@ public class ProductCategory {
 
     @Override
     public String toString() {
-        return "ProductCategory{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+        return "Price{" +
+                "typeId=" + typeId +
+                ", value=" + value +
+                ", currency='" + currency + '\'' +
+                ", productId=" + productId +
                 ", createdDate=" + createdDate +
                 ", updatedDate=" + updatedDate +
                 ", createdBy='" + createdBy + '\'' +
