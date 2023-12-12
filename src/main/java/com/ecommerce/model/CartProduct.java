@@ -1,12 +1,16 @@
 package com.ecommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.Instant;
 
 public class CartProduct {
     private int id;
     private int productId;
     private int quantity;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
     private Instant createdDate;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
     private Instant updatedDate;
     private String createdBy;
     private String updatedBy;

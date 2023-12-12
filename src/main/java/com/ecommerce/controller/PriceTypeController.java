@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/priceTypes")
 public class PriceTypeController {
-    private PriceTypeService<PriceType> priceTypeService;
+    private final PriceTypeService<PriceType> priceTypeService;
 
     @Autowired
     public PriceTypeController(PriceTypeService<PriceType> priceTypeService) {
@@ -31,18 +31,23 @@ public class PriceTypeController {
     }
 
     @GetMapping("/get/{id}")
-    public PriceType getPriceTypeById(@PathVariable int id) {
-        return priceTypeService.get(id).orElse(null);
+    public ResponseEntity<PriceType> getPriceTypeById(@PathVariable("id") int id) {
+        PriceType priceType = priceTypeService.get(id);
+        if (priceType != null) {
+            return new ResponseEntity<>(priceType, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PutMapping(value = "/update/{id}")
-    public ResponseEntity<String> updatePriceType(@RequestBody PriceType priceType, @PathVariable int id) {
+    public ResponseEntity<String> updatePriceType(@RequestBody PriceType priceType, @PathVariable("id") int id) {
         priceTypeService.update(priceType, id);
-        return new ResponseEntity<>("", HttpStatus.OK);
+        return new ResponseEntity<>("The priceType updated", HttpStatus.OK);
     }
 
-    @PostMapping("delete/{id}")
-    public ResponseEntity<String> deletePriceType(@PathVariable int id) {
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<String> deletePriceType(@PathVariable("id") int id) {
         priceTypeService.delete(id);
         return new ResponseEntity<>("The priceType has been deleted", HttpStatus.OK);
     }

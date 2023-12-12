@@ -6,7 +6,7 @@ import java.util.Optional;
 public interface PriceTypeService<PriceType>{
     List<PriceType> list();
     void create(PriceType priceType);
-    Optional<PriceType> get(int id);
+    PriceType get(int id);
     void update(PriceType priceType, int id);
     void delete(int id);
 }

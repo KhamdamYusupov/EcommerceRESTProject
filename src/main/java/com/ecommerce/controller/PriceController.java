@@ -31,18 +31,23 @@ public class PriceController {
     }
 
     @GetMapping("/get/{id}")
-    public Price getPriceByIOd(@PathVariable int id) {
-        return priceService.get(id).orElse(null);
+    public ResponseEntity<Price> getPriceByIOd(@PathVariable("id") int id) {
+        Price price = priceService.get(id);
+        if(price!=null) {
+            return new ResponseEntity<>(price, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PutMapping(value = "/update/{id}", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<String> updatePrice(@RequestBody Price price, @PathVariable int id) {
+    public ResponseEntity<String> updatePrice(@RequestBody Price price, @PathVariable("id") int id) {
         priceService.update(price, id);
         return new ResponseEntity<>("The price has been updated", HttpStatus.OK);
     }
 
-    @PostMapping("/delete/{id}")
-    public ResponseEntity<String> deletePrice(@PathVariable int id) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deletePrice(@PathVariable("id") int id) {
         priceService.delete(id);
         return new ResponseEntity<>("The price has been deleted", HttpStatus.OK);
     }

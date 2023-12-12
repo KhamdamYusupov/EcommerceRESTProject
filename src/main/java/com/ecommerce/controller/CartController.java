@@ -30,18 +30,23 @@ public class CartController {
     }
 
     @GetMapping("get/{id}")
-    public Cart getCartById(@PathVariable int id) {
-        return cartCartService.get(id).orElse(null);
+    public ResponseEntity<Cart>getCartById(@PathVariable("id") int id) {
+        Cart cart = cartCartService.get(id);
+        if(cart!=null) {
+            return new ResponseEntity<>(cart, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PutMapping(value = "/update/{id}", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<String> updateCart(@RequestBody Cart cart, @PathVariable int id) {
+    public ResponseEntity<String> updateCart(@RequestBody Cart cart, @PathVariable("id") int id) {
         cartCartService.update(cart, id);
         return new ResponseEntity<>("The cart with an id of " + id + " successfully updated", HttpStatus.OK);
     }
 
-    @PostMapping("/delete/{id}")
-    public ResponseEntity<String> deleteCart(@PathVariable int id) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteCart(@PathVariable("id") int id) {
         cartCartService.delete(id);
         return new ResponseEntity<>("The cart with an Id of " + id + " has been deleted", HttpStatus.OK);
     }

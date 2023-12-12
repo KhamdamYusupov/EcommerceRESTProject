@@ -1,15 +1,19 @@
 package com.ecommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.Instant;
 
 public class Price {
+    private int id;
     private int typeId;
-
     private int value;
     private String currency;
     private int productId;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
     private Instant createdDate;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
     private Instant updatedDate;
     private String createdBy;
     private String updatedBy;
@@ -17,7 +21,9 @@ public class Price {
     public Price() {
     }
 
-    public Price(int typeId, int value, String currency, int productId, Instant createdDate, Instant updatedDate, String createdBy, String updatedBy) {
+    public Price(int id, int typeId, int value, String currency, int productId,
+                 Instant createdDate, Instant updatedDate, String createdBy, String updatedBy) {
+        this.id = id;
         this.typeId = typeId;
         this.value = value;
         this.currency = currency;
@@ -26,6 +32,14 @@ public class Price {
         this.updatedDate = updatedDate;
         this.createdBy = createdBy;
         this.updatedBy = updatedBy;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getTypeId() {
@@ -90,19 +104,5 @@ public class Price {
 
     public void setUpdatedBy(String updatedBy) {
         this.updatedBy = updatedBy;
-    }
-
-    @Override
-    public String toString() {
-        return "Price{" +
-                "typeId=" + typeId +
-                ", value=" + value +
-                ", currency='" + currency + '\'' +
-                ", productId=" + productId +
-                ", createdDate=" + createdDate +
-                ", updatedDate=" + updatedDate +
-                ", createdBy='" + createdBy + '\'' +
-                ", updatedBy='" + updatedBy + '\'' +
-                '}';
     }
 }

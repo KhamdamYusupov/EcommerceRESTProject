@@ -14,13 +14,10 @@ import java.util.List;
 @RequestMapping("/cartProduct")
 public class CartProductController {
     private final CartProductService<CartProduct> cartProductService;
-
     @Autowired
     public CartProductController(CartProductService<CartProduct> cartProductService) {
         this.cartProductService = cartProductService;
     }
-
-
     @GetMapping("/list")
     public List<CartProduct>getCartProductList(){
         return cartProductService.list();
@@ -33,20 +30,24 @@ public class CartProductController {
     }
 
     @GetMapping("/get/{id}")
-    public CartProduct getCartProductById(@PathVariable int id) {
-        return cartProductService.get(id).orElse(null);
+    public ResponseEntity<CartProduct> getCartProductById(@PathVariable("id") int id) {
+        CartProduct cartProduct = cartProductService.get(id);
+        if(cartProduct!=null) {
+            return new ResponseEntity<>(cartProduct, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PutMapping(value = "/update/{id}", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<String> updateCartProduct(@RequestBody CartProduct cartProduct, @PathVariable int id) {
+    public ResponseEntity<String> updateCartProduct(@RequestBody CartProduct cartProduct, @PathVariable("id") int id) {
         cartProductService.update(cartProduct, id);
-        return new ResponseEntity<>("", HttpStatus.OK);
+        return new ResponseEntity<>("The cartProduct has been updated", HttpStatus.OK);
     }
 
-    @PostMapping("/delete/{id}")
-    public ResponseEntity<String>deleteCartProduct(@PathVariable int id) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String>deleteCartProduct(@PathVariable("id") int id) {
         cartProductService.delete(id);
         return new ResponseEntity<>("The cartProduct has been deleted", HttpStatus.OK);
     }
-
 }

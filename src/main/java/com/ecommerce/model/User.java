@@ -1,13 +1,16 @@
 package com.ecommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.Instant;
 
 public class User {
     private int id;
     private String firstName;
     private String lastName;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
     private Instant createdDate;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
     private Instant updatedDate;
     private String createdBy;
     private String updatedBy;
@@ -16,7 +19,8 @@ public class User {
     public User() {
     }
 
-    public User(int id, String firstName, String lastName, Instant createdDate, Instant updatedDate, String createdBy, String updatedBy) {
+    public User(int id, String firstName, String lastName, Instant createdDate,
+                Instant updatedDate, String createdBy, String updatedBy) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

@@ -13,7 +13,6 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
     private final UserService<User> userService;
-
     @Autowired
     public UserController(UserService<User> userService) {
         this.userService = userService;
@@ -25,24 +24,28 @@ public class UserController {
     }
 
     @PostMapping(value = "/create", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<String> createUser(User user) {
+    public ResponseEntity<String> createUser(@RequestBody User user) {
         userService.create(user);
         return new ResponseEntity<>("New User has been created", HttpStatus.CREATED);
     }
-
     @GetMapping("/get/{id}")
-    public User getUserById(@PathVariable int id) {
-        return userService.get(id).orElse(null);
+    public ResponseEntity<User> getUserById(@PathVariable("id") int id) {
+        User user = userService.get(id);
+        if(user!=null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PutMapping(value = "/update/{id}", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<String> updateUser(@RequestBody User user, @PathVariable int id) {
+    public ResponseEntity<String> updateUser(@RequestBody User user, @PathVariable("id") int id) {
         userService.update(user, id);
         return new ResponseEntity<>("The user has been updated", HttpStatus.OK);
     }
 
-    @PostMapping("/delete/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable int id) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable("id") int id) {
         userService.delete(id);
         return new ResponseEntity<>("The user has been deleted", HttpStatus.OK);
     }

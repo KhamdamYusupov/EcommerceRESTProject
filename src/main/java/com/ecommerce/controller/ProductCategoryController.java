@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("productCategory")
@@ -27,22 +28,27 @@ public class ProductCategoryController {
     @PostMapping("/create")
     public ResponseEntity<String> createProductCategory(@RequestBody ProductCategory productCategory) {
         productCategoryService.create(productCategory);
-        return new ResponseEntity<>("", HttpStatus.CREATED);
+        return new ResponseEntity<>("New product category created", HttpStatus.CREATED);
     }
 
     @GetMapping("/get/{id}")
-    public ProductCategory getProductCategoryById(@PathVariable int id) {
-        return productCategoryService.get(id).orElse(null);
+    public ResponseEntity<ProductCategory> getProductCategoryById(@PathVariable("id") int id) {
+    ProductCategory productCategory = productCategoryService.get(id);
+    if(productCategory!=null) {
+        return new ResponseEntity<>(productCategory, HttpStatus.OK);
+    }else {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PutMapping(value = "/update/{id}", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<String> updateProductCategory(@RequestBody ProductCategory productCategory, @PathVariable int id) {
+    public ResponseEntity<String> updateProductCategory(@RequestBody ProductCategory productCategory, @PathVariable("id") int id) {
         productCategoryService.update(productCategory, id);
-        return new ResponseEntity<>("", HttpStatus.OK);
+        return new ResponseEntity<>("The product category has been updated", HttpStatus.OK);
     }
 
-    @PostMapping("/delete/{id}")
-    public ResponseEntity<String> deleteProductCategory(@PathVariable int id) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteProductCategory(@PathVariable("id") int id) {
         productCategoryService.delete(id);
         return new ResponseEntity<>("The productCategory has been deleted", HttpStatus.OK);
     }

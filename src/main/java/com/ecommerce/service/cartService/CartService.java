@@ -6,7 +6,7 @@ import java.util.Optional;
 public interface CartService <Cart>{
 List<Cart>list();
 void create(Cart cart);
-Optional<Cart>get(int id);
+Cart get(int id);
 void update(Cart cart, int id);
 void delete(int id);
 }

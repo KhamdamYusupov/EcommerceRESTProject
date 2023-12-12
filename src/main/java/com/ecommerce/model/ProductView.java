@@ -4,10 +4,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.Instant;
 
-public class Product {
+public class ProductView {
     private int id;
     private String name;
     private int categoryId;
+    private String categoryName;
+    private int priceValue;
+    private String currency;
+    private String priceType;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
     private Instant expirationDate;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
@@ -17,17 +21,20 @@ public class Product {
     private String createdBy;
     private String updatedBy;
 
-
-    public Product() {
+    public ProductView() {
     }
 
-    public Product(int id, String name, int categoryId,
-                   Instant expirationDate,
-                   Instant createdDate, Instant updatedDate,
-                   String createdBy, String updatedBy) {
+    public ProductView(int id, String name, int categoryId, String categoryName,
+                       int priceValue, String currency, String priceType,
+                       Instant expirationDate, Instant createdDate, Instant updatedDate,
+                       String createdBy, String updatedBy) {
         this.id = id;
         this.name = name;
         this.categoryId = categoryId;
+        this.categoryName = categoryName;
+        this.priceValue = priceValue;
+        this.currency = currency;
+        this.priceType = priceType;
         this.expirationDate = expirationDate;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
@@ -57,6 +64,38 @@ public class Product {
 
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public int getPriceValue() {
+        return priceValue;
+    }
+
+    public void setPriceValue(int priceValue) {
+        this.priceValue = priceValue;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public String getPriceType() {
+        return priceType;
+    }
+
+    public void setPriceType(String priceType) {
+        this.priceType = priceType;
     }
 
     public Instant getExpirationDate() {
@@ -101,11 +140,15 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" +
+        return "ProductView{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", categoryId=" + categoryId +
-               ", expirationDate=" + expirationDate +
+                ", categoryName='" + categoryName + '\'' +
+                ", priceValue=" + priceValue +
+                ", currency='" + currency + '\'' +
+                ", priceType='" + priceType + '\'' +
+                ", expirationDate=" + expirationDate +
                 ", createdDate=" + createdDate +
                 ", updatedDate=" + updatedDate +
                 ", createdBy='" + createdBy + '\'' +
