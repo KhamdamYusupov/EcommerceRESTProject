@@ -3,11 +3,11 @@ package com.ecommerce.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.Instant;
-import java.util.List;
 
-public class Cart {
+public class PriceType {
     private int id;
-    private int userId;
+    private String name;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
     private Instant createdDate;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
@@ -15,11 +15,16 @@ public class Cart {
     private String createdBy;
     private String updatedBy;
 
-    public Cart() {
+    public PriceType() {
     }
 
-    public Cart(int userId) {
-        this.userId = userId;
+    public PriceType(int id, String name, Instant createdDate, Instant updatedDate, String createdBy, String updatedBy) {
+        this.id = id;
+        this.name = name;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
+        this.createdBy = createdBy;
+        this.updatedBy = updatedBy;
     }
 
     public int getId() {
@@ -30,12 +35,12 @@ public class Cart {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getName() {
+        return name;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Instant getCreatedDate() {
@@ -72,9 +77,9 @@ public class Cart {
 
     @Override
     public String toString() {
-        return "Cart{" +
+        return "PriceType{" +
                 "id=" + id +
-                ", userId=" + userId +
+                ", name='" + name + '\'' +
                 ", createdDate=" + createdDate +
                 ", updatedDate=" + updatedDate +
                 ", createdBy='" + createdBy + '\'' +

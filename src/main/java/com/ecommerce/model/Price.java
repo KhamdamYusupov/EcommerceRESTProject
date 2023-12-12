@@ -3,11 +3,14 @@ package com.ecommerce.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.Instant;
-import java.util.List;
 
-public class Cart {
+public class Price {
     private int id;
-    private int userId;
+    private int typeId;
+    private int value;
+    private String currency;
+    private int productId;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
     private Instant createdDate;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
@@ -15,11 +18,20 @@ public class Cart {
     private String createdBy;
     private String updatedBy;
 
-    public Cart() {
+    public Price() {
     }
 
-    public Cart(int userId) {
-        this.userId = userId;
+    public Price(int id, int typeId, int value, String currency, int productId,
+                 Instant createdDate, Instant updatedDate, String createdBy, String updatedBy) {
+        this.id = id;
+        this.typeId = typeId;
+        this.value = value;
+        this.currency = currency;
+        this.productId = productId;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
+        this.createdBy = createdBy;
+        this.updatedBy = updatedBy;
     }
 
     public int getId() {
@@ -30,12 +42,36 @@ public class Cart {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getTypeId() {
+        return typeId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
     public Instant getCreatedDate() {
@@ -68,17 +104,5 @@ public class Cart {
 
     public void setUpdatedBy(String updatedBy) {
         this.updatedBy = updatedBy;
-    }
-
-    @Override
-    public String toString() {
-        return "Cart{" +
-                "id=" + id +
-                ", userId=" + userId +
-                ", createdDate=" + createdDate +
-                ", updatedDate=" + updatedDate +
-                ", createdBy='" + createdBy + '\'' +
-                ", updatedBy='" + updatedBy + '\'' +
-                '}';
     }
 }

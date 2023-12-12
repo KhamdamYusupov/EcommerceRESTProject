@@ -3,11 +3,11 @@ package com.ecommerce.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.Instant;
-import java.util.List;
 
-public class Cart {
+public class User {
     private int id;
-    private int userId;
+    private String firstName;
+    private String lastName;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
     private Instant createdDate;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
@@ -15,11 +15,19 @@ public class Cart {
     private String createdBy;
     private String updatedBy;
 
-    public Cart() {
+
+    public User() {
     }
 
-    public Cart(int userId) {
-        this.userId = userId;
+    public User(int id, String firstName, String lastName, Instant createdDate,
+                Instant updatedDate, String createdBy, String updatedBy) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
+        this.createdBy = createdBy;
+        this.updatedBy = updatedBy;
     }
 
     public int getId() {
@@ -30,12 +38,20 @@ public class Cart {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public Instant getCreatedDate() {
@@ -72,9 +88,10 @@ public class Cart {
 
     @Override
     public String toString() {
-        return "Cart{" +
+        return "User{" +
                 "id=" + id +
-                ", userId=" + userId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", createdDate=" + createdDate +
                 ", updatedDate=" + updatedDate +
                 ", createdBy='" + createdBy + '\'' +
