@@ -4,35 +4,37 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.Instant;
 
-public class Product {
+public class OrderItem {
     private int id;
-    private String name;
-    private int categoryId;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
-    private Instant expirationDate;
+    private int productId;
+    private int quantity;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
     private Instant createdDate;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
     private Instant updatedDate;
     private String createdBy;
     private String updatedBy;
+    private int priceId;
+    private String measurements;
+    private int orderId;
 
-
-    public Product() {
+    public OrderItem() {
     }
 
-    public Product(int id, String name, int categoryId,
-                   Instant expirationDate,
-                   Instant createdDate, Instant updatedDate,
-                   String createdBy, String updatedBy) {
+    public OrderItem(int id, int productId, int quantity, Instant createdDate,
+                     Instant updatedDate, String createdBy, String updatedBy,
+                     int priceId, String measurements, int orderId) {
         this.id = id;
-        this.name = name;
-        this.categoryId = categoryId;
-        this.expirationDate = expirationDate;
+        this.productId = productId;
+        this.quantity = quantity;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
         this.createdBy = createdBy;
         this.updatedBy = updatedBy;
+        this.priceId = priceId;
+        this.measurements = measurements;
+        this.orderId = orderId;
     }
 
     public int getId() {
@@ -43,28 +45,20 @@ public class Product {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public int getProductId() {
+        return productId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public Instant getExpirationDate() {
-        return expirationDate;
-    }
-
-    public void setExpirationDate(Instant expirationDate) {
-        this.expirationDate = expirationDate;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public Instant getCreatedDate() {
@@ -99,17 +93,43 @@ public class Product {
         this.updatedBy = updatedBy;
     }
 
+    public int getPriceId() {
+        return priceId;
+    }
+
+    public void setPriceId(int priceId) {
+        this.priceId = priceId;
+    }
+
+    public String getMeasurements() {
+        return measurements;
+    }
+
+    public void setMeasurements(String measurements) {
+        this.measurements = measurements;
+    }
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
     @Override
     public String toString() {
-        return "Product{" +
+        return "OrderItem{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", categoryId=" + categoryId +
-               ", expirationDate=" + expirationDate +
+                ", productId=" + productId +
+                ", quantity=" + quantity +
                 ", createdDate=" + createdDate +
                 ", updatedDate=" + updatedDate +
                 ", createdBy='" + createdBy + '\'' +
                 ", updatedBy='" + updatedBy + '\'' +
+                ", priceId=" + priceId +
+                ", measurements='" + measurements + '\'' +
+                ", orderId=" + orderId +
                 '}';
     }
 }

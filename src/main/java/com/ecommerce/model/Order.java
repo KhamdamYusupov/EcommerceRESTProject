@@ -3,13 +3,11 @@ package com.ecommerce.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.Instant;
+import java.util.List;
 
-public class Product {
+public class Order {
     private int id;
-    private String name;
-    private int categoryId;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
-    private Instant expirationDate;
+    private int userId;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
     private Instant createdDate;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
@@ -18,17 +16,13 @@ public class Product {
     private String updatedBy;
 
 
-    public Product() {
+    public Order() {
     }
 
-    public Product(int id, String name, int categoryId,
-                   Instant expirationDate,
-                   Instant createdDate, Instant updatedDate,
-                   String createdBy, String updatedBy) {
+    public Order(int id, int userId, List<String> orderedProductItems,
+                 Instant createdDate, Instant updatedDate, String createdBy, String updatedBy) {
         this.id = id;
-        this.name = name;
-        this.categoryId = categoryId;
-        this.expirationDate = expirationDate;
+        this.userId = userId;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
         this.createdBy = createdBy;
@@ -43,28 +37,12 @@ public class Product {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public Instant getExpirationDate() {
-        return expirationDate;
-    }
-
-    public void setExpirationDate(Instant expirationDate) {
-        this.expirationDate = expirationDate;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public Instant getCreatedDate() {
@@ -99,13 +77,12 @@ public class Product {
         this.updatedBy = updatedBy;
     }
 
+
     @Override
     public String toString() {
-        return "Product{" +
+        return "Order{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", categoryId=" + categoryId +
-               ", expirationDate=" + expirationDate +
+                ", userId=" + userId +
                 ", createdDate=" + createdDate +
                 ", updatedDate=" + updatedDate +
                 ", createdBy='" + createdBy + '\'' +
