@@ -1,9 +1,11 @@
 package com.ecommerce.service.priceTypeService;
 
+import com.ecommerce.model.PriceType;
+
 import java.util.List;
 import java.util.Optional;
 
-public interface PriceTypeService<PriceType>{
+public interface PriceTypeService{
     List<PriceType> list();
     void create(PriceType priceType);
     PriceType get(int id);

@@ -1,9 +1,11 @@
 package com.ecommerce.service.priceService;
 
+import com.ecommerce.model.Price;
+
 import java.util.List;
 import java.util.Optional;
 
-public interface PriceService<Price>{
+public interface PriceService{
     List<Price> list();
     void create(Price prices);
     Price get(int id);

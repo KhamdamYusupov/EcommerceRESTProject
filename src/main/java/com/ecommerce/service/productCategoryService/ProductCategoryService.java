@@ -3,9 +3,8 @@ package com.ecommerce.service.productCategoryService;
 import com.ecommerce.model.ProductCategory;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface ProductCategoryService <ProductCategory>{
+public interface ProductCategoryService{
     List<ProductCategory>list();
     void create(ProductCategory productCategory);
     ProductCategory get(int id);

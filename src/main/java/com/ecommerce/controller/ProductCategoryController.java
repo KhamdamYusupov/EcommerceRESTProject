@@ -8,15 +8,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("productCategory")
 public class ProductCategoryController {
-    private final ProductCategoryService<ProductCategory> productCategoryService;
+    private final ProductCategoryService productCategoryService;
 
     @Autowired
-    public ProductCategoryController(ProductCategoryService<ProductCategory> productCategoryService) {
+    public ProductCategoryController(ProductCategoryService productCategoryService) {
         this.productCategoryService = productCategoryService;
     }
 

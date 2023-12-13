@@ -4,24 +4,37 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.Instant;
 
-public class CartProduct {
+public class OrderItem {
     private int id;
     private int productId;
     private int quantity;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
     private Instant createdDate;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
     private Instant updatedDate;
     private String createdBy;
     private String updatedBy;
+    private int priceId;
+    private String measurements;
+    private int orderId;
 
-    public CartProduct() {
+    public OrderItem() {
     }
 
-    public CartProduct(int cartId, int productId, int quantity) {
-        this.id = cartId;
+    public OrderItem(int id, int productId, int quantity, Instant createdDate,
+                     Instant updatedDate, String createdBy, String updatedBy,
+                     int priceId, String measurements, int orderId) {
+        this.id = id;
         this.productId = productId;
         this.quantity = quantity;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
+        this.createdBy = createdBy;
+        this.updatedBy = updatedBy;
+        this.priceId = priceId;
+        this.measurements = measurements;
+        this.orderId = orderId;
     }
 
     public int getId() {
@@ -80,16 +93,43 @@ public class CartProduct {
         this.updatedBy = updatedBy;
     }
 
+    public int getPriceId() {
+        return priceId;
+    }
+
+    public void setPriceId(int priceId) {
+        this.priceId = priceId;
+    }
+
+    public String getMeasurements() {
+        return measurements;
+    }
+
+    public void setMeasurements(String measurements) {
+        this.measurements = measurements;
+    }
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
     @Override
     public String toString() {
-        return "CartProduct{" +
-                "cartId=" + id +
+        return "OrderItem{" +
+                "id=" + id +
                 ", productId=" + productId +
                 ", quantity=" + quantity +
                 ", createdDate=" + createdDate +
                 ", updatedDate=" + updatedDate +
                 ", createdBy='" + createdBy + '\'' +
                 ", updatedBy='" + updatedBy + '\'' +
+                ", priceId=" + priceId +
+                ", measurements='" + measurements + '\'' +
+                ", orderId=" + orderId +
                 '}';
     }
 }

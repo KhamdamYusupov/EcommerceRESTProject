@@ -6,13 +6,11 @@ import com.ecommerce.model.ProductView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,10 +46,10 @@ public class ProductServiceImpl implements ProductService {
         productView.setId(rs.getInt("id"));
         productView.setName(rs.getString("name"));
         productView.setCategoryId(rs.getInt("category_id"));
-        productView.setCategoryName(rs.getString("name"));
-        productView.setPriceType(rs.getString("name"));
+        productView.setCategoryName(rs.getString("category_name"));
         productView.setPriceValue(rs.getInt("value"));
         productView.setCurrency(rs.getString("currency"));
+        productView.setPriceType(rs.getString("price_type_name"));
         if(rs.getTimestamp("expiration_date")!=null){
             productView.setExpirationDate(rs.getTimestamp("expiration_date").toInstant());
         }
@@ -74,15 +72,17 @@ public class ProductServiceImpl implements ProductService {
     }
     @Override
     public List<ProductView> listForUI() {
-        String SQL_FIND_LIST_FOR_UI = "select p.id, p.name, p.category_id, pc.name, pr.value, pr.currency, pt.id, pt.name," +
-                "p.expiration_date, p.created_at, p.updated_at, " +
-                "p.created_by, p.updated_by from products p " +
-                "left join product_category pc " +
-                "on p.category_id=pc.id " +
-                "left join prices pr " +
-                "on p.id=pr.product_id " +
-                "left join price_types pt " +
-                "on pr.type_id=pt.id";
+        String SQL_FIND_LIST_FOR_UI = """
+                select p.id, p.name, p.category_id, pc.name as category_name,
+                pr.value, pr.currency, pt.name as price_type_name, p.expiration_date, p.created_at, p.updated_at, p.created_by, p.updated_by
+                from products p
+                left join product_category pc
+                on p.category_id=pc.id
+                left join prices pr
+                on p.id=pr.product_id
+                left join price_types pt
+                on pr.type_id = pt.id
+                """;
         return jdbcTemplate.query(SQL_FIND_LIST_FOR_UI, productViewRowMapper);
     }
 
@@ -104,7 +104,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void update(Product product, int id) {
         String SQL_UPDATE = "update products set name=?, category_id=?, expiration_date=?, updated_at=current_timestamp, updated_by=? where id=?";
-        final int updatedRow = jdbcTemplate.update(SQL_UPDATE, product.getName(), product.getCategoryId(), product.getExpirationDate(), product.getUpdatedBy(), id);
+        final int updatedRow = jdbcTemplate.update(SQL_UPDATE, product.getName(), product.getCategoryId(), Timestamp.from(product.getExpirationDate()), product.getUpdatedBy(), id);
         if(updatedRow==1) {
             logger.info("Product updated: " + product.getName());
         }

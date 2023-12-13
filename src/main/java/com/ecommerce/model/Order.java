@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.Instant;
 import java.util.List;
 
-public class Cart {
+public class Order {
     private int id;
     private int userId;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
@@ -15,11 +15,18 @@ public class Cart {
     private String createdBy;
     private String updatedBy;
 
-    public Cart() {
+
+    public Order() {
     }
 
-    public Cart(int userId) {
+    public Order(int id, int userId, List<String> orderedProductItems,
+                 Instant createdDate, Instant updatedDate, String createdBy, String updatedBy) {
+        this.id = id;
         this.userId = userId;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
+        this.createdBy = createdBy;
+        this.updatedBy = updatedBy;
     }
 
     public int getId() {
@@ -70,9 +77,10 @@ public class Cart {
         this.updatedBy = updatedBy;
     }
 
+
     @Override
     public String toString() {
-        return "Cart{" +
+        return "Order{" +
                 "id=" + id +
                 ", userId=" + userId +
                 ", createdDate=" + createdDate +

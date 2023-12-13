@@ -1,24 +1,27 @@
 package com.ecommerce.config;
 
-import org.springframework.lang.NonNull;
-import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletRegistration;
+import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.servlet.DispatcherServlet;
 
 
-public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class WebAppInitializer implements WebApplicationInitializer {
 
     @Override
-    protected Class<?>[] getRootConfigClasses() {
-        return new Class[0];
-    }
+    public void onStartup(ServletContext container) {
+        AnnotationConfigWebApplicationContext context
+                = new AnnotationConfigWebApplicationContext();
+        context.setConfigLocation("com.ecommerce.config.AppConfig");
 
-    @Override
-    protected Class<?>[] getServletConfigClasses() {
-        return new Class[]{AppConfig.class};
-    }
+        container.addListener(new ContextLoaderListener(context));
 
-    @NonNull
-    @Override
-    protected String[] getServletMappings() {
-        return new String[]{"/"};
+        ServletRegistration.Dynamic dispatcher = container
+                .addServlet("dispatcher", new DispatcherServlet(context));
+
+        dispatcher.setLoadOnStartup(1);
+        dispatcher.addMapping("/");
     }
 }

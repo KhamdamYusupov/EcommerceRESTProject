@@ -4,7 +4,6 @@ import com.ecommerce.model.Product;
 import com.ecommerce.model.ProductView;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ProductService{
     List<Product> list();

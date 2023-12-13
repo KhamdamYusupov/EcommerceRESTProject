@@ -4,18 +4,16 @@ import com.ecommerce.model.Price;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
 
 @Service
-public class PriceServiceImpl implements PriceService<Price> {
+public class PriceServiceImpl implements PriceService {
     private static final Logger logger = LoggerFactory.getLogger(PriceServiceImpl.class);
     private final JdbcTemplate jdbcTemplate;
 
@@ -78,7 +76,7 @@ public class PriceServiceImpl implements PriceService<Price> {
 
     @Override
     public void delete(int id) {
-        String SQL_DELETE = "delete from prices where type_id=?";
+        String SQL_DELETE = "delete from prices where id=?";
         final int deleted = jdbcTemplate.update(SQL_DELETE, id);
         if(deleted == 1){
             logger.info("Deleted the price with an id of " + id);

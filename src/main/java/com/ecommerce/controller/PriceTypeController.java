@@ -12,10 +12,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/priceTypes")
 public class PriceTypeController {
-    private final PriceTypeService<PriceType> priceTypeService;
+    private final PriceTypeService priceTypeService;
 
     @Autowired
-    public PriceTypeController(PriceTypeService<PriceType> priceTypeService) {
+    public PriceTypeController(PriceTypeService priceTypeService) {
         this.priceTypeService = priceTypeService;
     }
 
